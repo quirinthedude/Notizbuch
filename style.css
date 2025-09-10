@@ -70,7 +70,6 @@ button:active {
     height: 100%;
     box-sizing: border-box;
     resize: vertical;
-    /* optional */
 }
 
 .note input {
@@ -162,8 +161,6 @@ button:active {
 #content_note > ul {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  /* gap: 10px; */
-  /* padding: 20px; */
   margin: 0;
   list-style: none;
 }
