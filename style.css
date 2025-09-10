@@ -1,173 +1,74 @@
-header {
-    display: flex;
-    border: 1px;
-    box-shadow: 2px 2px 2px 2px black;
-    justify-content: space-between;
-    align-items: center;
-    height: 96px;
-    width: 100%;
-    margin-top: 10px;
-}
-
-header h1 {
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-button {
-    box-shadow: 2px 2px 2px 2px black;
-    border: 0;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: lightslategray;
-}
-
-button:active {
-    background-color: grey;
-    transform: scale(0.98);
-}
-
-.header_button {
-    display: flex;
-    justify-content: flex-end;
-    gap: 4%;
-    padding-right: 10px;
-}
-
-.note {
-    margin-top: 10px;
-    border: 1px;
-    box-shadow: 2px 2px 2px 2px black;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-
-.note form {
-    display: grid;
-    grid-template-columns: 1fr 1.5fr;
-    grid-template-rows: auto 1.5fr;
-    gap: 12px;
-    align-items: start;
-}
-
-.note #note_headline [type="text"] {
-    grid-area: 1 / 1;
-}
-
-.note button {
-    grid-area: 2 / 1;
-    width: 120px;
-}
-
-.note textarea {
-    grid-area: 1 / 2 / span 2 / 3;
-}
-
-.note textarea {
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-    resize: vertical;
-}
-
-.note input {
-    width: 30vw;
-}
-
-#content_note p {
-    white-space: pre-wrap;
-}
-
-#content_note {
-    padding-top: 20px;
-}
-
-#trash {
-    background-color: blue;
-    color: aqua;
-    border-style: outset;
-    width: 70vw;
-    height: 360px;
-    max-height: 90vh;
-}
-
-#trash::backdrop {
-    background: rgba(0, 0, 0, .5);
-}
-
-#trash_list {
-    padding-top: 10px;
-}
-
-.del {
-    cursor: pointer;
-    font-size: 20px;
-}
-
-.del:focus-visible {
-    outline: 2px solid currentColor;
-    outline-offset: 2px;
-}
-
-.background {
-    background-image: url('./img/kork.png');
-    background-repeat: repeat;
-    background-size: auto;
-    border: 3px;
-    color: black;
-    box-shadow: 0px 0px 2px 2px black;
-
-
-}
-
-.note_render {
-    background-image: url('./img/notebackground.png');
-    background-repeat: no-repeat;
-    background-position: top center;
-    background-size: contain;
-    max-width: 360px;
-    width: 100%;
-    min-height: 320px;
-    padding: 80px 80px 56px;
-    box-sizing: border-box;
-    list-style: none;
-}
-
-.note_body {
-    max-height: 142px;
-    overflow: auto;
-    padding-right: 6px;
-    overscroll-behavior: contain;
-}
-
-.note_body::-webkit-scrollbar{ width: 8px; }
-.note_body::-webkit-scrollbar-thumb{ background: #bbb; border-radius: 8px; }
-.note_body::-webkit-scrollbar-track{ background: transparent; }
-
-#content_note ul {
-    margin: 0;
-    padding: 0;
-}
-
-#content_note li {
-    list-style: none;
-}
-/* Flex aus standart.css neutralisieren (oder in standart.css löschen) */
-#content_note { display: block !important; }
-
-/* Richtig: Grid aufs UL setzen */
-#content_note > ul {
+/* ==== Grundlayout (Desktop/Tablet) ==== */
+.nb-layout {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  margin: 0;
-  list-style: none;
+  grid-template-areas:
+    "header  header"
+    "inputs  notes"
+    "footer  footer";
+  grid-template-columns: 320px 1fr; /* links fix, rechts flexibel */
+  grid-template-rows: auto 1fr auto;
+  gap: 16px;
+  min-height: 100dvh;
+  padding: 16px;
+  box-sizing: border-box;
 }
 
-/* Zettel dürfen flexibel in der Spalte wachsen */
-#content_note li.note_render {
+.nb-header { grid-area: header; }
+.nb-inputs { grid-area: inputs; }
+.nb-notes  { grid-area: notes; }
+.nb-footer { grid-area: footer; }
+
+/* ==== Inputs-Spalte: kompakt nach oben ==== */
+.nb-inputs {
+  display: grid;
+  grid-template-columns: 1fr;          /* alles untereinander */
+  grid-auto-rows: min-content;         /* Labels/Input „schrumpfen“ nicht weg */
+  gap: 12px;
+  align-content: start;                 /* Block bleibt oben */
+}
+
+.nb-inputs input,
+.nb-inputs textarea {
   width: 100%;
-  max-width: 360px;
-  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Optional: Button unten „andocken“ */
+#note-save {
+  justify-self: start;                  /* links ausrichten */
+}
+
+/* ==== Notes-Bereich: Kachelraster ==== */
+/* repeat(auto-fit, minmax(220px, 1fr)):
+   - erzeugt so viele Spalten wie „reinpassen“
+   - jede Kachel mind. 220px breit, sonst gleichmäßig verteilt */
+.nb-notes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  align-content: start;
+  overflow: auto;                       /* viele Notizen -> scrollt nur dieser Bereich */
+  padding-bottom: 8px;                  /* etwas Abstand unten */
+}
+
+/* ==== Note-Karte ==== */
+.note {
+  padding: 12px;
+  border: 1px solid #ccc;
+  background: #fffdf6;
+  border-radius: 8px;
+}
+.note-title { margin: 0 0 8px; font-size: 1.05rem; }
+.note-body  { margin: 0;                white-space: pre-wrap; }
+
+/* ==== Mobile: einspaltig (Inputs vor Notes) ==== */
+@media (max-width: 680px) {
+  .nb-layout {
+    grid-template-areas:
+      "header"
+      "inputs"
+      "notes"
+      "footer";
+    grid-template-columns: 1fr;
+  }
 }

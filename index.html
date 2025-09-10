@@ -1,47 +1,30 @@
-<!DOCTYPE html>
-<html lang="de">
+<main class="nb-layout">
+  <header class="nb-header">
+    <h1>Notizblock</h1>
+  </header>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notizblock</title>
-    <script src="./script.js"></script>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="./styles/standart.css">
+  <section class="nb-inputs" aria-label="Neue Notiz">
+    <label for="note-title">Titel</label>
+    <input type="text" id="note-title" placeholder="Titel eingeben">
 
-</head>
+    <label for="note-text">Text</label>
+    <textarea id="note-text" rows="8" placeholder="Notiztext …"></textarea>
 
-<body onload="renderNotes()">
-    <header>
-        <h1>Notizblock</h1>
-        <div class="header_button">
-            <button onclick="loadNotes()">Notizen laden</button>
-            <button onclick="saveNotes()">Notizen speichern</button>
-            <button onclick="deleteNotes()">Markiertes in den Papierkorb</button>
-            <button onclick="toggleAddUI()">Notiz hinzufügen</button>
-            <button class="del" type="button" aria-label="Mülltonne" onclick="toggleTrash()">🗑️</button>
-        </div>
-    </header>
-    <main>
-        <article class="note hidden">
-            <form id="add_form" onsubmit="handleAddSubmit(event)">
-            <div id="note_headline">Notiz hinzufügen
-            <input type="text" id="add_title" placeholder="Überschrift" onkeydown="askForCtrlEnter(event)" required>
-            </div>
-            <textarea id="add_notes" rows="3" placeholder="Notiz..." onkeydown="askForCtrlEnter(event)" required></textarea>
-            <button type="submit">Übernehmen</button>
-             </form>
-        </article>
-        <div  id="content_note" class="background"></div>
-        <dialog id="trash">
-            <button type="button" aria-label="Dialog schliessen" onclick="toggleTrash()">X</button>
-            <button type="button" aria-label="verschieben in Notizen" onclick="undelete()">markierte Notizen zurück</button>
-            <button type="button" aria-label="Papierkorb leeren" onclick="emptyTrash()">Papierkorb leeren</button>
-            <div id="trash_list"></div>
+    <button id="note-save" type="button">Speichern</button>
+  </section>
 
-        </dialog>
+  <section class="nb-notes" id="notes-list" aria-label="Gespeicherte Notizen">
+    <!-- Beispiel-Notes; dein Renderer ersetzt das -->
+    <article class="note">
+      <h2 class="note-title">Beispielnote A</h2>
+      <p class="note-body">Kurzer Beispieltext …</p>
+    </article>
 
-    </main>
-</body>
+    <article class="note">
+      <h2 class="note-title">Beispielnote B</h2>
+      <p class="note-body">Noch ein Beispiel …</p>
+    </article>
+  </section>
 
-</html>
+  <footer class="nb-footer">© Quirin</footer>
+</main>
