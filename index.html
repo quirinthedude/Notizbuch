@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notizblock</title>
+    <script src="./script.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./styles/standart.css">
+
+</head>
+
+<body onload="renderNotes()">
+    <header>
+        <h1>Notizblock</h1>
+        <div class="header_button">
+            <button onclick="loadNotes()">Notizen laden</button>
+            <button onclick="saveNotes()">Notizen speichern</button>
+            <button onclick="deleteNotes()">Markiertes in den Papierkorb</button>
+            <button onclick="toggleAddUI()">Notiz hinzufügen</button>
+            <button class="del" type="button" aria-label="Mülltonne" onclick="toggleTrash()">🗑️</button>
+        </div>
+    </header>
+    <main>
+        <article class="note hidden">
+            <form id="add_form" onsubmit="handleAddSubmit(event)">
+            <div id="note_headline">Notiz hinzufügen
+            <input type="text" id="add_title" placeholder="Überschrift" onkeydown="askForCtrlEnter(event)" required>
+            </div>
+            <textarea id="add_notes" rows="3" placeholder="Notiz..." onkeydown="askForCtrlEnter(event)" required></textarea>
+            <button type="submit">Übernehmen</button>
+             </form>
+        </article>
+        <div  id="content_note" class="background"></div>
+        <dialog id="trash">
+            <button type="button" aria-label="Dialog schliessen" onclick="toggleTrash()">X</button>
+            <button type="button" aria-label="verschieben in Notizen" onclick="undelete()">markierte Notizen zurück</button>
+            <button type="button" aria-label="Papierkorb leeren" onclick="emptyTrash()">Papierkorb leeren</button>
+            <div id="trash_list"></div>
+
+        </dialog>
+
+    </main>
+</body>
+
+</html>
